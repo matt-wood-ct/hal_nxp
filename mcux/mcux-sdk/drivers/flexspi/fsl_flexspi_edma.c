@@ -232,8 +232,7 @@ status_t FLEXSPI_TransferEDMA(FLEXSPI_Type *base, flexspi_edma_handle_t *handle,
 
         /* Submit transfer. */
         (void)EDMA_SubmitTransfer(handle->txDmaHandle, &xferConfig);
-        EDMA_SetModulo(handle->txDmaHandle->base, handle->txDmaHandle->channel, kEDMA_ModuloDisable,
-                       (edma_modulo_t)power);
+        handle->txDmaHandle->base->TCD[handle->txDmaHandle->channel].ATTR |= DMA_ATTR_DMOD(power);
         EDMA_SetCallback(handle->txDmaHandle, FLEXSPI_TransferEDMACallback,
                          &s_edmaPrivateHandle[FLEXSPI_GetInstance(base)]);
         EDMA_StartTransfer(handle->txDmaHandle);
@@ -272,8 +271,7 @@ status_t FLEXSPI_TransferEDMA(FLEXSPI_Type *base, flexspi_edma_handle_t *handle,
 
         /* Submit transfer. */
         (void)EDMA_SubmitTransfer(handle->rxDmaHandle, &xferConfig);
-        EDMA_SetModulo(handle->txDmaHandle->base, handle->txDmaHandle->channel, (edma_modulo_t)power,
-                       kEDMA_ModuloDisable);
+        handle->rxDmaHandle->base->TCD[handle->rxDmaHandle->channel].ATTR |= DMA_ATTR_SMOD(power);
         EDMA_SetCallback(handle->rxDmaHandle, FLEXSPI_TransferEDMACallback, &s_edmaPrivateHandle[instance]);
         EDMA_StartTransfer(handle->rxDmaHandle);
 

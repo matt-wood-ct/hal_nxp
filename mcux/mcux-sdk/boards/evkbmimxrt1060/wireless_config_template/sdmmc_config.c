@@ -150,7 +150,7 @@ void BOARD_SDCardPowerResetInit(void)
 {
     hal_gpio_pin_config_t sw_config = {
         kHAL_GpioDirectionOut,
-        1,
+        0,
         BOARD_SDMMC_SD_POWER_RESET_GPIO_PORT,
         BOARD_SDMMC_SD_POWER_RESET_GPIO_PIN,
     };

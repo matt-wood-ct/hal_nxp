@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021, 2022 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -57,22 +57,21 @@ enum _mculcd_transfer_state
 status_t FLEXIO_MCULCD_Init(FLEXIO_MCULCD_Type *base, flexio_mculcd_config_t *config, uint32_t srcClock_Hz)
 {
     assert(NULL != config);
-    status_t status;
 
     flexio_config_t flexioConfig = {config->enable, config->enableInDoze, config->enableInDebug,
                                     config->enableFastAccess};
 
     FLEXIO_Init(base->flexioBase, &flexioConfig);
 
-    status = FLEXIO_MCULCD_SetBaudRate(base, config->baudRate_Bps, srcClock_Hz);
-
-    if (kStatus_Success == status)
+    if (kStatus_Success != FLEXIO_MCULCD_SetBaudRate(base, config->baudRate_Bps, srcClock_Hz))
     {
-        base->setCSPin(true);
-        base->setRSPin(true);
+        return kStatus_Success;
     }
 
-    return status;
+    base->setCSPin(true);
+    base->setRSPin(true);
+
+    return kStatus_Success;
 }
 
 /*!

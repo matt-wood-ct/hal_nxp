@@ -174,30 +174,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 endif()
 
-if(CONFIG_USE_middleware_baremetal_MIMXRT1173_cm4)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1173_cm4)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
-if(CONFIG_USE_middleware_baremetal_MIMXRT1173_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1173_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
 if(CONFIG_USE_middleware_baremetal_LPC5516)
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
@@ -336,12 +312,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 endif()
 
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1042)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
 if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1176_cm4)
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
@@ -349,30 +319,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 endif()
 
 if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1176_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
-if(CONFIG_USE_middleware_baremetal_MIMXRT1175_cm4)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1175_cm4)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
-if(CONFIG_USE_middleware_baremetal_MIMXRT1175_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1175_cm7)
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
 )
@@ -481,18 +427,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 endif()
 
 if(CONFIG_USE_middleware_freertos-kernel_LPC54S005)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
-if(CONFIG_USE_middleware_baremetal_MIMXRT1171_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1171_cm7)
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
 )
@@ -607,18 +541,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 endif()
 
 if(CONFIG_USE_middleware_freertos-kernel_MIMXRT595S_cm33)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
-)
-endif()
-
-if(CONFIG_USE_middleware_baremetal_MIMXRT1172_cm7)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_bm.c
-)
-endif()
-
-if(CONFIG_USE_middleware_freertos-kernel_MIMXRT1172_cm7)
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_os_abstraction_free_rtos.c
 )

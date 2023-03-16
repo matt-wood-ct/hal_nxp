@@ -4,9 +4,9 @@
 **                          MIMXRT595SFFOC_dsp
 **
 **     Compiler:            XCC Compiler
-**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Reference manual:    RT500 Reference Manual. Rev.C, 8/2020
 **     Version:             rev. 5.0, 2020-08-27
-**     Build:               b220711
+**     Build:               b201016
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -14,7 +14,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2022 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -40,7 +40,7 @@
 /*!
  * @file MIMXRT595S
  * @version 1.0
- * @date 110722
+ * @date 161020
  * @brief Device specific configuration file for MIMXRT595S (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
@@ -50,6 +50,12 @@
 
 #include <stdint.h>
 #include "fsl_device_registers.h"
+
+/* Get OSC clock from SYSOSC_BYPASS */
+static uint32_t getOscClk(void)
+{
+    return (CLKCTL0->SYSOSCBYPASS == 0U) ? CLK_XTAL_OSC_CLK : ((CLKCTL0->SYSOSCBYPASS == 1U) ? CLK_EXT_CLKIN : 0U);
+}
 
 static uint32_t getSpllFreq(void)
 {
@@ -62,7 +68,7 @@ static uint32_t getSpllFreq(void)
             freq = CLK_FRO_DIV8_CLK;
             break;
         case CLKCTL0_SYSPLL0CLKSEL_SEL(1): /* OSC clock */
-            freq = CLK_OSC_CLK;
+            freq = getOscClk();
             break;
         default:
             freq = 0U;
@@ -112,7 +118,7 @@ void SystemCoreClockUpdate(void)
                     freq = CLK_FRO_CLK;
                     break;
                 case CLKCTL1_DSPCPUCLKSELA_SEL(1): /* OSC_CLK clock */
-                    freq = CLK_OSC_CLK;
+                    freq = getOscClk();
                     break;
                 case CLKCTL1_DSPCPUCLKSELA_SEL(2): /* Low Power Oscillator Clock (1m_lposc) */
                     freq = CLK_LPOSC_1MHZ;
@@ -150,7 +156,7 @@ void SystemCoreClockUpdate(void)
             break;
     }
 
-    SystemCoreClock = freq / ((CLKCTL1->DSPCPUCLKDIV & 0xFFU) + 1U);
+    SystemCoreClock = freq / ((CLKCTL1->DSPCPUCLKDIV & 0xffU) + 1U);
 }
 
 /* ----------------------------------------------------------------------------

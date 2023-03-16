@@ -1168,7 +1168,7 @@ static float findPll0MMult(void)
                        (float)(uint32_t)(1UL << PLL0_SSCG_MD_INT_P));
         mMult       = (float)mMult_int + mMult_fract;
     }
-    if (0ULL == ((uint64_t)mMult))
+    if(0ULL == ((uint64_t)mMult))
     {
         mMult = 1.0F;
     }
@@ -2074,7 +2074,6 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
     volatile uint32_t i;
     uint32_t phyPllDiv  = 0U;
     uint16_t multiplier = 0U;
-    bool ret            = true;
 
     POWER_DisablePD(kPDRUNCFG_PD_XTAL32M);
     POWER_DisablePD(kPDRUNCFG_PD_LDOXO32M);
@@ -2095,60 +2094,55 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
 
     USBPHY->CTRL_CLR = USBPHY_CTRL_SFTRST_MASK;
 
-    multiplier = (uint16_t)(480000000UL / freq);
+    multiplier = 480000000 / freq;
 
     switch (multiplier)
     {
-        case 15U:
+        case 15:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(0U);
             break;
         }
-        case 16U:
+        case 16:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(1U);
             break;
         }
-        case 20U:
+        case 20:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(2U);
             break;
         }
-        case 24U:
+        case 24:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(4U);
             break;
         }
-        case 25U:
+        case 25:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(5U);
             break;
         }
-        case 30U:
+        case 30:
         {
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(6U);
             break;
         }
         default:
         {
-            ret = false;
-            break;
+            return false;
         }
     }
+    USBPHY->PLL_SIC     = (USBPHY->PLL_SIC & ~USBPHY_PLL_SIC_PLL_DIV_SEL(0x7)) | phyPllDiv;
+    USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_REG_ENABLE_MASK;
+    USBPHY->PLL_SIC_CLR = (1UL << 16U); // Reserved. User must set this bit to 0x0
+    USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_POWER_MASK;
+    USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_EN_USB_CLKS_MASK;
 
-    if (ret)
-    {
-        USBPHY->PLL_SIC     = (USBPHY->PLL_SIC & ~USBPHY_PLL_SIC_PLL_DIV_SEL(0x7)) | phyPllDiv;
-        USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_REG_ENABLE_MASK;
-        USBPHY->PLL_SIC_CLR = (1UL << 16U); // Reserved. User must set this bit to 0x0
-        USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_POWER_MASK;
-        USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_EN_USB_CLKS_MASK;
+    USBPHY->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+    USBPHY->PWD_SET  = 0x0;
 
-        USBPHY->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
-        USBPHY->PWD_SET  = 0x0;
-    }
-
-    return ret;
+    return true;
 }
 
 /* Enable USB DEVICE HIGH SPEED clock */

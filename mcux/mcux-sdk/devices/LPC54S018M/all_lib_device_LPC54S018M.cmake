@@ -15,10 +15,12 @@ list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_LIST_DIR}/../../components/i2c
     ${CMAKE_CURRENT_LIST_DIR}/../../components/lists
     ${CMAKE_CURRENT_LIST_DIR}/../../components/log
+    ${CMAKE_CURRENT_LIST_DIR}/../../components/mma8652fc
     ${CMAKE_CURRENT_LIST_DIR}/../../components/osa
     ${CMAKE_CURRENT_LIST_DIR}/../../components/panic
     ${CMAKE_CURRENT_LIST_DIR}/../../components/phy
     ${CMAKE_CURRENT_LIST_DIR}/../../components/phy/device/phylan8720a
+    ${CMAKE_CURRENT_LIST_DIR}/../../components/phy/mdio/lpc_enet
     ${CMAKE_CURRENT_LIST_DIR}/../../components/serial_manager
     ${CMAKE_CURRENT_LIST_DIR}/../../components/silicon_id
     ${CMAKE_CURRENT_LIST_DIR}/../../components/timer
@@ -62,9 +64,10 @@ list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/mbedtls
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/sdmmc
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/usb
-    ${CMAKE_CURRENT_LIST_DIR}/../../../rtos/freertos/freertos-kernel
-    ${CMAKE_CURRENT_LIST_DIR}/../../utilities
+    ${CMAKE_CURRENT_LIST_DIR}/../../../rtos/freertos/freertos_kernel
     ${CMAKE_CURRENT_LIST_DIR}/../../utilities/assert
+    ${CMAKE_CURRENT_LIST_DIR}/../../utilities/debug_console
+    ${CMAKE_CURRENT_LIST_DIR}/../../utilities/debug_console_lite
     ${CMAKE_CURRENT_LIST_DIR}/../../utilities/misc_utilities
     ${CMAKE_CURRENT_LIST_DIR}/drivers
     ${CMAKE_CURRENT_LIST_DIR}/utilities
@@ -76,7 +79,7 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_ctimer)
 #    include(middleware_sdmmc_osa_bm)
 #    include(middleware_sdmmc_mmc)
-#    include(middleware_lwip_apps_httpd)
+#    include(driver_phy-common)
 #    include(middleware_lwip_apps_lwiperf)
 #    include(utility_shell)
 #    include(driver_lpc_gpio)
@@ -97,7 +100,7 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_inputmux)
 #    include(driver_flexcomm_i2c)
 #    include(driver_iap)
-#    include(component_silicon_id_LPC54S018M)
+#    include(component_serial_manager)
 #    include(middleware_lwip_apps_mqtt)
 #    include(middleware_usb_device_cdc_external)
 #    include(driver_lpc_dma)
@@ -108,11 +111,13 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_spi_dma)
 #    include(driver_flexcomm_spi_freertos)
 #    include(middleware_sdmmc_host_sdif_polling)
+#    include(component_mrt_adapter)
 #    include(driver_pint)
 #    include(middleware_lwip_contrib_ping)
 #    include(driver_lpc_enet)
 #    include(driver_sctimer)
 #    include(middleware_usb_device_common_header)
+#    include(component_silicon_id)
 #    include(middleware_lwip_enet_ethernetif_LPC54S018M)
 #    include(middleware_lwip_apps_httpsrv)
 #    include(driver_lpc_adc)
@@ -130,6 +135,7 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_spi)
 #    include(driver_utick)
 #    include(middleware_sdmmc_osa_freertos)
+#    include(middleware_lwip_apps_httpd)
 #    include(component_serial_manager_usb_cdc)
 #    include(driver_clock)
 #    include(device_CMSIS)
@@ -142,8 +148,9 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(middleware_usb_host_common_header)
 #    include(middleware_usb_host_cdc)
 #    include(driver_gt911)
+#    include(driver_mma8652fc)
 #    include(component_codec_i2c_LPC54S018M)
-#    include(component_mrt_adapter)
+#    include(driver_mdio-common)
 #    include(middleware_lwip_apps_httpd_support)
 #    include(component_osa_free_rtos)
 #    include(middleware_mbedtls_LPC54S018M)
@@ -169,11 +176,12 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_inputmux_connections)
 #    include(middleware_usb_host_printer)
 #    include(driver_mcan)
-#    include(driver_phy-common_LPC54S018M)
 #    include(middleware_fatfs_mmc)
 #    include(driver_flexcomm_i2c_dma)
 #    include(component_flexcomm_i2c_adapter)
 #    include(utility_assert_lite)
+#    include(middleware_fatfs)
+#    include(driver_mdio-lpc-enet)
 #    include(middleware_usb_host_audio)
 #    include(driver_flexcomm_usart_freertos)
 #    include(utility_debug_console)
@@ -192,7 +200,7 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_lpc_rtc)
 #    include(middleware_sdmmc_common)
 #    include(middleware_fatfs_sd)
-#    include(component_serial_manager)
+#    include(middleware_sdmmc_sd)
 #    include(driver_dmic)
 #    include(driver_cmsis_flexcomm_spi)
 #    include(middleware_usb_host_video)
@@ -208,7 +216,6 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_usart_dma)
 #    include(middleware_freertos-kernel_heap_4)
 #    include(component_mflash_lpc54s018m)
-#    include(middleware_sdmmc_sd)
 #    include(driver_flexcomm_i2c_freertos)
 #    include(middleware_sdmmc_host_sdif_freertos)
 #    include(middleware_usb_host_phdc)
@@ -216,6 +223,5 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(component_mflash_file_LPC54S018M)
 #    include(middleware_usb_device_ip3511hs_LPC54S018M)
 #    include(component_wm8904_adapter)
-#    include(middleware_fatfs_LPC54S018M)
 #    include(driver_reset)
 #    include(middleware_usb_device_stack_external)

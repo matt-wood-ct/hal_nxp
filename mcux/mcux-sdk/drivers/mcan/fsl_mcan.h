@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief MCAN driver version. */
-#define FSL_MCAN_DRIVER_VERSION (MAKE_VERSION(2, 3, 2))
+#define FSL_MCAN_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 #ifndef MCAN_RETRY_TIMES
@@ -340,19 +340,6 @@ typedef struct _mcan_timing_config
 #endif
 } mcan_timing_config_t;
 
-/*! @brief MCAN Message RAM related configuration structure. */
-typedef struct _mcan_memory_config
-{
-    uint32_t baseAddr;                        /*!< Message RAM base address, should be 4k alignment. */
-    mcan_frame_filter_config_t *stdFilterCfg; /* Standard message ID filter configure */
-    mcan_frame_filter_config_t *extFilterCfg; /* Extended message ID filter configure */
-    mcan_rx_fifo_config_t *rxFifo0Cfg;        /* Rx FIFO 0 configuration */
-    mcan_rx_fifo_config_t *rxFifo1Cfg;        /* Rx FIFO 1 configuration */
-    mcan_rx_buffer_config_t *rxBufferCfg;     /* Rx buffer configuration */
-    mcan_tx_fifo_config_t *txFifoCfg;         /* Tx event FIFO configuration */
-    mcan_tx_buffer_config_t *txBufferCfg;     /* Tx buffer configuration */
-} mcan_memory_config_t;
-
 /*! @brief MCAN module configuration structure. */
 typedef struct _mcan_config
 {
@@ -470,23 +457,6 @@ void MCAN_Deinit(CAN_Type *base);
 void MCAN_GetDefaultConfig(mcan_config_t *config);
 
 /*!
- * @brief MCAN enters initialization mode.
- *
- * After enter initialization mode, users can write access to the protected conﬁguration registers.
- *
- * @param base MCAN peripheral base address.
- */
-static inline void MCAN_EnterInitialMode(CAN_Type *base)
-{
-    /* Enable write access to the protected conﬁguration registers */
-    base->CCCR |= CAN_CCCR_INIT_MASK;
-    while (0U == (base->CCCR & CAN_CCCR_INIT_MASK))
-    {
-    }
-    base->CCCR |= CAN_CCCR_CCE_MASK;
-}
-
-/*!
  * @brief MCAN enters normal mode.
  *
  * After initialization, INIT bit in CCCR register must be cleared to enter
@@ -494,14 +464,7 @@ static inline void MCAN_EnterInitialMode(CAN_Type *base)
  *
  * @param base MCAN peripheral base address.
  */
-static inline void MCAN_EnterNormalMode(CAN_Type *base)
-{
-    /* Reset INIT bit to enter normal mode. */
-    base->CCCR &= ~CAN_CCCR_INIT_MASK;
-    while (0U != (base->CCCR & CAN_CCCR_INIT_MASK))
-    {
-    }
-}
+void MCAN_EnterNormalMode(CAN_Type *base);
 
 /*!
  * @name Configuration.
@@ -683,18 +646,6 @@ void MCAN_SetTxBufferConfig(CAN_Type *base, const mcan_tx_buffer_config_t *confi
  * @param config The MCAN filter configuration.
  */
 void MCAN_SetFilterConfig(CAN_Type *base, const mcan_frame_filter_config_t *config);
-
-/*!
- * @brief Set Message RAM related configuration.
- *
- * @note This function include Standard/extended ID filter, Rx FIFO 0/1, Rx buffer, Tx event FIFO and Tx buffer
- *      configurations
- * @param base MCAN peripheral base address.
- * @param config The MCAN filter configuration.
- * @retval kStatus_Success - Message RAM related configuration Successfully.
- * @retval kStatus_Fail    - Message RAM related configure fail due to wrong address parameter.
- */
-status_t MCAN_SetMessageRamConfig(CAN_Type *base, const mcan_memory_config_t *config);
 
 /*!
  * @brief Set standard message ID filter element configuration.

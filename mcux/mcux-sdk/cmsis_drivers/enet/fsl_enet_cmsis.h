@@ -33,12 +33,8 @@
 #define ENET_FLAG_POWER      (1U << 1)
 #define ETH_MAC_EVENT_OTHERS (ARM_ETH_MAC_EVENT_TIMER_ALARM + 1U)
 
-typedef struct _cmsis_enet_mac_resource
-{
-    ENET_Type *base;           /*!< ENET peripheral base address. */
-    uint32_t (*GetFreq)(void); /*!< Function to get frequency. */
-} cmsis_enet_mac_resource_t;
-
 extern ARM_DRIVER_ETH_MAC Driver_ETH_MAC0;
+
+extern uint32_t ENET0_GetFreq(void);
 
 #endif

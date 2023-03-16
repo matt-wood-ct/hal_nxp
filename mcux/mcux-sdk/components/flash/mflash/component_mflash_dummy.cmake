@@ -19,7 +19,4 @@ endif()
 if(${MCUX_DEVICE} STREQUAL "MIMXRT1062")
     include(component_mflash_file_MIMXRT1062)
 endif()
-if(${MCUX_DEVICE} STREQUAL "MIMXRT1042")
-    include(component_mflash_file_MIMXRT1042)
-endif()
 

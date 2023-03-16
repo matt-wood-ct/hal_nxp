@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * \file
@@ -46,18 +46,6 @@
 
 #ifndef gMemManagerLightGuardsCheckEnable
 #define gMemManagerLightGuardsCheckEnable 0
-#endif
-
-/*! Extend Heap usage beyond the size defined by MinimalHeapSize_c up to __HEAP_end__ symbol address.
- *   __HEAP_end__ shall be defined in linker script
- *   If __HEAP_end__ is defined to upper RAM address, this allows to make full use of the
- *   remaining available SRAM.
- *   @Warning, no data shall be placed after memHeap symbol address up to __HEAP_end__ .
- *   For this, memHeap symbol is located in .heap section after the bss and data sections
- *   in linker script
- */
-#ifndef gMemManagerLightExtendHeapAreaUsage
-#define gMemManagerLightExtendHeapAreaUsage   1
 #endif
 
 /*! *********************************************************************************
@@ -112,7 +100,7 @@ typedef struct blockHeader_s
     uint8_t preguard[BLOCK_HDR_PREGUARD_SIZE];
 #endif
     uint16_t used;
-#if defined(MEM_STATISTICS_INTERNAL)
+#if defined(MEM_STATISTICS)
     uint16_t buff_size;
 #endif
     struct blockHeader_s *next;
@@ -147,7 +135,6 @@ typedef union void_ptr_tag
 *************************************************************************************
 ********************************************************************************** */
 
-#ifndef MEMORY_POOL_GLOBAL_VARIABLE_ALLOC
 /* Allocate memHeap array in the .heap section to ensure the size of the .heap section is large enough
    for the application
    However, the real heap used at run time will cover all the .heap section so this area can be bigger
@@ -163,17 +150,8 @@ static uint32_t memHeap[MinimalHeapSize_c / sizeof(uint32_t)] __attribute__((sec
 #error "Compiler unknown!"
 #endif
 
-#if defined(gMemManagerLightExtendHeapAreaUsage) && (gMemManagerLightExtendHeapAreaUsage == 1)
 extern uint32_t __HEAP_end__[];
 static const uint32_t memHeapEnd = (uint32_t)&__HEAP_end__;
-#else
-static const uint32_t memHeapEnd = (uint32_t)(memHeap + MinimalHeapSize_c/ sizeof(uint32_t));
-#endif
-
-#else
-extern uint32_t *memHeap;
-extern uint32_t memHeapEnd;
-#endif /* MEMORY_POOL_GLOBAL_VARIABLE_ALLOC */
 
 static freeBlockHeaderList_t FreeBlockHdrList;
 
@@ -420,7 +398,7 @@ mem_status_t MEM_Init(void)
         firstBlockHdr->next_free = NULL;
         firstBlockHdr->prev_free = NULL;
 
-#if defined(MEM_STATISTICS_INTERNAL)
+#if defined(MEM_STATISTICS)
         firstBlockHdr->buff_size = 0U;
 #endif
 
@@ -473,7 +451,7 @@ static void *MEM_BufferAllocate(uint32_t numBytes, uint8_t poolId)
             available_size = (uint32_t)FreeBlockHdr->next - (uint32_t)FreeBlockHdr - BLOCK_HDR_SIZE;
             /* if a next block hdr exists, it means (by design) that a next free block exists too
                Because the last block header at the end of the heap will always be free
-               So, the current block header can't be the tail, and the next free can't be NULL */
+               So, the current block header cant be the tail, and the next free cant be NULL */
             assert(FreeBlockHdr < FreeBlockHdrList.tail);
             assert(FreeBlockHdr->next_free != NULL);
 
@@ -522,13 +500,7 @@ static void *MEM_BufferAllocate(uint32_t numBytes, uint8_t poolId)
         {
             /* last block in the heap, check if available space to allocate the block */
             uint32_t available_size;
-            uint32_t current_footprint = (uint32_t)FreeBlockHdr + BLOCK_HDR_SIZE - 1U;
-
-            /* Current allocation should never be greater than heap end */
-            assert(current_footprint <= memHeapEnd);
-
-            available_size = memHeapEnd - current_footprint;
-
+            available_size = memHeapEnd - (uint32_t)FreeBlockHdr - BLOCK_HDR_SIZE;
             assert(FreeBlockHdr == FreeBlockHdrList.tail);
 
             if (available_size >= (numBytes + BLOCK_HDR_SIZE)) /* need to keep the room for the next BlockHeader */
@@ -633,7 +605,7 @@ static void *MEM_BufferAllocate(uint32_t numBytes, uint8_t poolId)
         void_ptr_t buffer_ptr;
 #ifdef MEM_TRACKING
         void_ptr_t lr;
-        lr.raw_address                    = (uint32_t)__mem_get_LR();
+        lr.raw_address                    = __get_LR();
         BlockHdrFound->first_alloc_caller = lr.void_ptr;
 #endif
         buffer_ptr.raw_address = (uint32_t)BlockHdrFound + BLOCK_HDR_SIZE;

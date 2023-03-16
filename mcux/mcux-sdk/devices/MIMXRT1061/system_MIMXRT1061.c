@@ -1,13 +1,9 @@
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1061CVJ5A
-**                          MIMXRT1061CVJ5B
 **                          MIMXRT1061CVL5A
-**                          MIMXRT1061CVL5B
 **                          MIMXRT1061DVJ6A
-**                          MIMXRT1061DVJ6B
 **                          MIMXRT1061DVL6A
-**                          MIMXRT1061DVL6B
 **                          MIMXRT1061XVN5B
 **
 **     Compilers:           Freescale C/C++ for Embedded ARM
@@ -18,7 +14,7 @@
 **
 **     Reference manual:    IMXRT1060RM Rev.3, 07/2021 | IMXRT106XSRM Rev.0
 **     Version:             rev. 1.4, 2022-03-25
-**     Build:               b221009
+**     Build:               b220401
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that

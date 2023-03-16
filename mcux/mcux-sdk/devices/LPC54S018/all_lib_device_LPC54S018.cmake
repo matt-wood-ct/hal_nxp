@@ -15,10 +15,12 @@ list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_LIST_DIR}/../../components/i2c
     ${CMAKE_CURRENT_LIST_DIR}/../../components/lists
     ${CMAKE_CURRENT_LIST_DIR}/../../components/log
+    ${CMAKE_CURRENT_LIST_DIR}/../../components/mma8652fc
     ${CMAKE_CURRENT_LIST_DIR}/../../components/osa
     ${CMAKE_CURRENT_LIST_DIR}/../../components/panic
     ${CMAKE_CURRENT_LIST_DIR}/../../components/phy
     ${CMAKE_CURRENT_LIST_DIR}/../../components/phy/device/phylan8720a
+    ${CMAKE_CURRENT_LIST_DIR}/../../components/phy/mdio/lpc_enet
     ${CMAKE_CURRENT_LIST_DIR}/../../components/serial_manager
     ${CMAKE_CURRENT_LIST_DIR}/../../components/silicon_id
     ${CMAKE_CURRENT_LIST_DIR}/../../components/timer
@@ -62,9 +64,10 @@ list(APPEND CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/mbedtls
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/sdmmc
     ${CMAKE_CURRENT_LIST_DIR}/../../../middleware/usb
-    ${CMAKE_CURRENT_LIST_DIR}/../../../rtos/freertos/freertos-kernel
-    ${CMAKE_CURRENT_LIST_DIR}/../../utilities
+    ${CMAKE_CURRENT_LIST_DIR}/../../../rtos/freertos/freertos_kernel
     ${CMAKE_CURRENT_LIST_DIR}/../../utilities/assert
+    ${CMAKE_CURRENT_LIST_DIR}/../../utilities/debug_console
+    ${CMAKE_CURRENT_LIST_DIR}/../../utilities/debug_console_lite
     ${CMAKE_CURRENT_LIST_DIR}/../../utilities/misc_utilities
     ${CMAKE_CURRENT_LIST_DIR}/drivers
     ${CMAKE_CURRENT_LIST_DIR}/utilities
@@ -76,12 +79,11 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_ctimer)
 #    include(middleware_sdmmc_osa_bm)
 #    include(middleware_sdmmc_mmc)
-#    include(middleware_lwip_apps_httpd)
+#    include(driver_phy-common)
 #    include(middleware_lwip_apps_lwiperf)
 #    include(utility_shell)
 #    include(driver_lpc_gpio)
 #    include(device_system)
-#    include(component_silicon_id_LPC54S018)
 #    include(driver_lpc_crc)
 #    include(driver_otp)
 #    include(driver_spifi_dma)
@@ -110,11 +112,13 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_spi_dma)
 #    include(driver_flexcomm_spi_freertos)
 #    include(middleware_sdmmc_host_sdif_polling)
+#    include(component_mrt_adapter)
 #    include(driver_pint)
 #    include(middleware_lwip_contrib_ping)
 #    include(driver_lpc_enet)
 #    include(driver_sctimer)
 #    include(middleware_lwip_usb_ethernetif)
+#    include(component_silicon_id)
 #    include(middleware_lwip_apps_httpsrv)
 #    include(driver_lpc_adc)
 #    include(driver_flexcomm)
@@ -131,6 +135,7 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_spi)
 #    include(driver_utick)
 #    include(middleware_sdmmc_osa_freertos)
+#    include(middleware_lwip_apps_httpd)
 #    include(component_serial_manager_usb_cdc)
 #    include(driver_clock)
 #    include(device_CMSIS)
@@ -143,7 +148,8 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(middleware_usb_host_common_header)
 #    include(component_mflash_file_LPC54S018)
 #    include(driver_gt911)
-#    include(component_mrt_adapter)
+#    include(driver_mma8652fc)
+#    include(driver_mdio-common)
 #    include(middleware_lwip_apps_httpd_support)
 #    include(component_osa_free_rtos)
 #    include(middleware_sdmmc_sd)
@@ -165,7 +171,6 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(CMSIS_Driver_Include_USART)
 #    include(CMSIS_Driver_Include_SPI)
 #    include(driver_cmsis_flexcomm_usart)
-#    include(driver_phy-common_LPC54S018)
 #    include(driver_flexcomm_i2s_dma)
 #    include(driver_inputmux_connections)
 #    include(middleware_usb_host_printer)
@@ -174,6 +179,8 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_flexcomm_i2c_dma)
 #    include(component_flexcomm_i2c_adapter)
 #    include(utility_assert_lite)
+#    include(middleware_fatfs)
+#    include(driver_mdio-lpc-enet)
 #    include(middleware_usb_host_audio)
 #    include(driver_flexcomm_usart_freertos)
 #    include(utility_debug_console)
@@ -202,7 +209,6 @@ list(APPEND CMAKE_MODULE_PATH
 #    include(driver_mrt)
 #    include(component_codec_i2c_LPC54S018)
 #    include(driver_rng)
-#    include(middleware_fatfs_LPC54S018)
 #    include(utilities_misc_utilities_LPC54S018)
 #    include(component_osa)
 #    include(driver_fmeas)

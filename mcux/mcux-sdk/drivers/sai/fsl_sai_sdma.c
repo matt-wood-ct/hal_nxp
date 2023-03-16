@@ -104,12 +104,7 @@ static void SAI_TxSDMACallback(sdma_handle_t *handle, void *userData, bool trans
     /* If all data finished, just stop the transfer */
     if (saiHandle->saiQueue[saiHandle->queueDriver].data == NULL)
     {
-        /* Disable dma */
-        SDMA_AbortTransfer(handle);
-        /* Disable DMA enable bit */
-        SAI_TxEnableDMA(privHandle->base, kSAI_FIFORequestDMAEnable, false);
-        /* Set the handle state */
-        saiHandle->state = (uint32_t)kSAI_Idle;
+        SAI_TransferAbortSendSDMA(privHandle->base, saiHandle);
     }
 }
 
@@ -129,12 +124,7 @@ static void SAI_RxSDMACallback(sdma_handle_t *handle, void *userData, bool trans
     /* If all data finished, just stop the transfer */
     if (saiHandle->saiQueue[saiHandle->queueDriver].data == NULL)
     {
-        /* Disable dma */
-        SDMA_AbortTransfer(handle);
-        /* Disable DMA enable bit */
-        SAI_RxEnableDMA(privHandle->base, kSAI_FIFORequestDMAEnable, false);
-        /* Set the handle state */
-        saiHandle->state = (uint32_t)kSAI_Idle;
+        SAI_TransferAbortReceiveSDMA(privHandle->base, saiHandle);
     }
 }
 
@@ -283,12 +273,12 @@ void SAI_TransferTxSetFormatSDMA(I2S_Type *base,
         handle->fifoOffset = 0U;
     }
 
-#if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
+#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     handle->count =
-        ((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base) - (uint32_t)format->watermark) * (uint32_t)format->channelNums;
+        ((uint32_t)FSL_FEATURE_SAI_FIFO_COUNT - (uint32_t)format->watermark) * (uint32_t)format->channelNums;
 #else
     handle->count = 1U * format->channelNums;
-#endif /* FSL_FEATURE_SAI_HAS_FIFO */
+#endif /* FSL_FEATURE_SAI_FIFO_COUNT */
 
     /* Clear the channel enable bits until do a send/receive */
     base->TCR3 &= ~I2S_TCR3_TCE_MASK;
@@ -329,12 +319,12 @@ void SAI_TransferTxSetConfigSDMA(I2S_Type *base, sai_sdma_handle_t *handle, sai_
         handle->fifoOffset = 0U;
     }
 
-#if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
-    handle->count = ((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base) - (uint32_t)saiConfig->fifo.fifoWatermark) *
+#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
+    handle->count = ((uint32_t)FSL_FEATURE_SAI_FIFO_COUNT - (uint32_t)saiConfig->fifo.fifoWatermark) *
                     (uint32_t)saiConfig->channelNums;
 #else
     handle->count = 1U * saiConfig->channelNums;
-#endif /* FSL_FEATURE_SAI_HAS_FIFO */
+#endif /* FSL_FEATURE_SAI_FIFO_COUNT */
 
     /* Clear the channel enable bits until do a send/receive */
     base->TCR3 &= ~I2S_TCR3_TCE_MASK;
@@ -397,11 +387,11 @@ void SAI_TransferRxSetFormatSDMA(I2S_Type *base,
     /* Update the data channel SAI used */
     handle->channel = format->channel;
 
-#if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
+#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     handle->count = (uint32_t)format->watermark * (uint32_t)format->channelNums;
 #else
     handle->count = 1U * format->channelNums;
-#endif /* FSL_FEATURE_SAI_HAS_FIFO */
+#endif /* FSL_FEATURE_SAI_FIFO_COUNT */
 
     /* Clear the channel enable bits until do a send/receive */
     base->RCR3 &= ~I2S_RCR3_RCE_MASK;
@@ -444,11 +434,11 @@ void SAI_TransferRxSetConfigSDMA(I2S_Type *base, sai_sdma_handle_t *handle, sai_
     /* Update the data channel SAI used */
     handle->channel = saiConfig->startChannel;
 
-#if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
+#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     handle->count = (uint32_t)saiConfig->fifo.fifoWatermark * (uint32_t)saiConfig->channelNums;
 #else
     handle->count = 1U * saiConfig->channelNums;
-#endif /* FSL_FEATURE_SAI_HAS_FIFO */
+#endif /* FSL_FEATURE_SAI_FIFO_COUNT */
 
     /* Clear the channel enable bits until do a send/receive */
     base->RCR3 &= ~I2S_RCR3_RCE_MASK;
@@ -709,9 +699,6 @@ void SAI_TransferTerminateSendSDMA(I2S_Type *base, sai_sdma_handle_t *handle)
 
     handle->queueUser   = 0U;
     handle->queueDriver = 0U;
-
-    /* Reset the internal state of bd pool */
-    SDMA_InstallBDMemory(handle->dmaHandle, handle->bdPool, handle->dmaHandle->bdCount);
 }
 
 /*!
@@ -768,7 +755,4 @@ void SAI_TransferTerminateReceiveSDMA(I2S_Type *base, sai_sdma_handle_t *handle)
 
     handle->queueUser   = 0U;
     handle->queueDriver = 0U;
-
-    /* Reset the internal state of bd pool */
-    SDMA_InstallBDMemory(handle->dmaHandle, handle->bdPool, handle->dmaHandle->bdCount);
 }

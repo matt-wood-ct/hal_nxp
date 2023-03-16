@@ -129,6 +129,13 @@ static uint32_t PXP_ConvertFloat(float floatValue, uint8_t intBits, uint8_t frac
 static void PXP_GetScalerParam(uint16_t inputDimension, uint16_t outputDimension, uint8_t *dec, uint32_t *scale);
 
 /*!
+ * @brief Reset the PXP to initialized state.
+ *
+ * @param base PXP peripheral base address.
+ */
+static void PXP_ResetToInit(PXP_Type *base);
+
+/*!
  * @brief Copy rectangle.
  *
  * @param base PXP peripheral base address.
@@ -260,12 +267,7 @@ static void PXP_GetScalerParam(uint16_t inputDimension, uint16_t outputDimension
     }
 }
 
-/*!
- * brief Reset the PXP and the control register to initialized state.
- *
- * param base PXP peripheral base address.
- */
-void PXP_ResetControl(PXP_Type *base)
+static void PXP_ResetToInit(PXP_Type *base)
 {
     uint32_t ctrl = 0U;
 
@@ -306,7 +308,7 @@ void PXP_Init(PXP_Type *base)
     CLOCK_EnableClock(s_pxpClocks[instance]);
 #endif
 
-    PXP_ResetControl(base);
+    PXP_ResetToInit(base);
 
     /* Disable the alpha surface. */
     PXP_SetAlphaSurfacePosition(base, 0xFFFFU, 0xFFFFU, 0U, 0U);
@@ -1169,7 +1171,7 @@ static void PXP_StartRectCopy(PXP_Type *base,
     intMask = base->CTRL & (PXP_CTRL_NEXT_IRQ_ENABLE_MASK | PXP_CTRL_IRQ_ENABLE_MASK);
 #endif
 
-    PXP_ResetControl(base);
+    PXP_ResetToInit(base);
 
     /* Restore previous interrupt configuration. */
     PXP_EnableInterrupts(base, intMask);
