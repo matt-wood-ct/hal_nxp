@@ -415,11 +415,11 @@
 /* IGPIO module features */
 
 /* @brief Has data register set DR_SET. */
-#define FSL_FEATURE_IGPIO_HAS_DR_SET (1)
+#define FSL_FEATURE_IGPIO_HAS_DR_SET (0)
 /* @brief Has data register clear DR_CLEAR. */
-#define FSL_FEATURE_IGPIO_HAS_DR_CLEAR (1)
+#define FSL_FEATURE_IGPIO_HAS_DR_CLEAR (0)
 /* @brief Has data register toggle DR_TOGGLE. */
-#define FSL_FEATURE_IGPIO_HAS_DR_TOGGLE (1)
+#define FSL_FEATURE_IGPIO_HAS_DR_TOGGLE (0)
 
 /* LCDIF module features */
 
