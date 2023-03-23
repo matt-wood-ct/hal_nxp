@@ -590,7 +590,7 @@
 		pinmux = <0x401f8110 5 0x0 0 0x401f8300>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_ad_b1_05_enet_mdio: IOMUXC_GPIO_AD_B1_05_ENET_MDIO {
-		pinmux = <0x401f8110 1 0x0 0 0x401f8300>;
+		pinmux = <0x401f8110 1 0x401f8430 0 0x401f8300>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_ad_b1_05_flexio3_flexio05: IOMUXC_GPIO_AD_B1_05_FLEXIO3_FLEXIO05 {
 		pinmux = <0x401f8110 9 0x0 0 0x401f8300>;
@@ -1282,7 +1282,7 @@
 		gpr = <0x400ac018 0x1d 0x1>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_04_enet_rx_data0: IOMUXC_GPIO_B1_04_ENET_RX_DATA0 {
-		pinmux = <0x401f818c 3 0x0 0 0x401f837c>;
+		pinmux = <0x401f818c 3 0x401f8434 1 0x401f837c>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_04_flexio2_flexio20: IOMUXC_GPIO_B1_04_FLEXIO2_FLEXIO20 {
 		pinmux = <0x401f818c 4 0x0 0 0x401f837c>;
@@ -1308,7 +1308,7 @@
 		pinmux = <0x401f818c 1 0x0 0 0x401f837c>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_05_enet_rx_data1: IOMUXC_GPIO_B1_05_ENET_RX_DATA1 {
-		pinmux = <0x401f8190 3 0x0 0 0x401f8380>;
+		pinmux = <0x401f8190 3 0x401f8438 1 0x401f8380>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_05_flexio2_flexio21: IOMUXC_GPIO_B1_05_FLEXIO2_FLEXIO21 {
 		pinmux = <0x401f8190 4 0x0 0 0x401f8380>;
@@ -1334,7 +1334,7 @@
 		pinmux = <0x401f8190 1 0x0 0 0x401f8380>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_06_enet_rx_en: IOMUXC_GPIO_B1_06_ENET_RX_EN {
-		pinmux = <0x401f8194 3 0x0 0 0x401f8384>;
+		pinmux = <0x401f8194 3 0x401f843c 1 0x401f8384>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_06_flexio2_flexio22: IOMUXC_GPIO_B1_06_FLEXIO2_FLEXIO22 {
 		pinmux = <0x401f8194 4 0x0 0 0x401f8384>;
@@ -1446,7 +1446,7 @@
 		gpr = <0x400ac018 0x7 0x0>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_10_enet_ref_clk: IOMUXC_GPIO_B1_10_ENET_REF_CLK {
-		pinmux = <0x401f81a4 6 0x0 0 0x401f8394>;
+		pinmux = <0x401f81a4 6 0x401f842c 1 0x401f8394>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_10_enet_tx_clk: IOMUXC_GPIO_B1_10_ENET_TX_CLK {
 		pinmux = <0x401f81a4 3 0x0 0 0x401f8394>;
@@ -1473,7 +1473,7 @@
 		gpr = <0x400ac018 0xb 0x0>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_11_enet_rx_er: IOMUXC_GPIO_B1_11_ENET_RX_ER {
-		pinmux = <0x401f81a8 3 0x0 0 0x401f8398>;
+		pinmux = <0x401f81a8 3 0x401f8440 1 0x401f8398>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_11_flexio2_flexio27: IOMUXC_GPIO_B1_11_FLEXIO2_FLEXIO27 {
 		pinmux = <0x401f81a8 4 0x0 0 0x401f8398>;
@@ -1578,7 +1578,7 @@
 		pinmux = <0x401f81b4 3 0x0 0 0x401f83a4>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_15_enet_mdio: IOMUXC_GPIO_B1_15_ENET_MDIO {
-		pinmux = <0x401f81b8 0 0x0 0 0x401f83a8>;
+		pinmux = <0x401f81b8 0 0x401f8430 2 0x401f83a8>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_b1_15_flexio2_flexio31: IOMUXC_GPIO_B1_15_FLEXIO2_FLEXIO31 {
 		pinmux = <0x401f81b8 4 0x0 0 0x401f83a8>;
@@ -2112,7 +2112,7 @@
 		pinmux = <0x401f805c 6 0x0 0 0x401f824c>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_19_enet_rx_data1: IOMUXC_GPIO_EMC_19_ENET_RX_DATA1 {
-		pinmux = <0x401f8060 3 0x0 0 0x401f8250>;
+		pinmux = <0x401f8060 3 0x401f8438 0 0x401f8250>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_19_flexpwm2_pwma3: IOMUXC_GPIO_EMC_19_FLEXPWM2_PWMA3 {
 		pinmux = <0x401f8060 1 0x0 0 0x401f8250>;
@@ -2139,7 +2139,7 @@
 		pinmux = <0x401f8060 6 0x0 0 0x401f8250>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_20_enet_rx_data0: IOMUXC_GPIO_EMC_20_ENET_RX_DATA0 {
-		pinmux = <0x401f8064 3 0x0 0 0x401f8254>;
+		pinmux = <0x401f8064 3 0x401f8434 0 0x401f8254>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_20_flexpwm2_pwmb3: IOMUXC_GPIO_EMC_20_FLEXPWM2_PWMB3 {
 		pinmux = <0x401f8064 1 0x0 0 0x401f8254>;
@@ -2214,7 +2214,7 @@
 		pinmux = <0x401f806c 0 0x0 0 0x401f825c>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_23_enet_rx_en: IOMUXC_GPIO_EMC_23_ENET_RX_EN {
-		pinmux = <0x401f8070 3 0x0 0 0x401f8260>;
+		pinmux = <0x401f8070 3 0x401f843c 0 0x401f8260>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_23_flexpwm1_pwma0: IOMUXC_GPIO_EMC_23_FLEXPWM1_PWMA0 {
 		pinmux = <0x401f8070 1 0x0 0 0x401f8260>;
@@ -2266,7 +2266,7 @@
 		pinmux = <0x401f8074 0 0x0 0 0x401f8264>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_25_enet_ref_clk: IOMUXC_GPIO_EMC_25_ENET_REF_CLK {
-		pinmux = <0x401f8078 4 0x0 0 0x401f8268>;
+		pinmux = <0x401f8078 4 0x401f842c 0 0x401f8268>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_25_enet_tx_clk: IOMUXC_GPIO_EMC_25_ENET_TX_CLK {
 		pinmux = <0x401f8078 3 0x0 0 0x401f8268>;
@@ -2292,7 +2292,7 @@
 		pinmux = <0x401f8078 0 0x0 0 0x401f8268>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_26_enet_rx_er: IOMUXC_GPIO_EMC_26_ENET_RX_ER {
-		pinmux = <0x401f807c 3 0x0 0 0x401f826c>;
+		pinmux = <0x401f807c 3 0x401f8440 0 0x401f826c>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_26_flexio1_flexio12: IOMUXC_GPIO_EMC_26_FLEXIO1_FLEXIO12 {
 		pinmux = <0x401f807c 4 0x0 0 0x401f826c>;
@@ -2654,7 +2654,7 @@
 		pinmux = <0x401f80b4 6 0x0 0 0x401f82a4>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_41_enet_mdio: IOMUXC_GPIO_EMC_41_ENET_MDIO {
-		pinmux = <0x401f80b8 4 0x0 0 0x401f82a8>;
+		pinmux = <0x401f80b8 4 0x401f8430 1 0x401f82a8>;
 	};
 	/omit-if-no-ref/ iomuxc_gpio_emc_41_gpio3_io27: IOMUXC_GPIO_EMC_41_GPIO3_IO27 {
 		pinmux = <0x401f80b8 5 0x0 0 0x401f82a8>;
